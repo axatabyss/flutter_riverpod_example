@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod_example/routes/app_routes.dart';
+import 'package:flutter_riverpod_example/routes/routes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,12 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Placeholder(),
+    return ScreenUtilInit(
+      builder: (context, child) => MaterialApp(
+        routes: AppRoutes.routes,
+        initialRoute: Routes.home,
+        debugShowCheckedModeBanner: false,
+      )
     );
   }
 }

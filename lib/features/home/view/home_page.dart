@@ -16,17 +16,31 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MaterialButton(
-                child: const Text("Jokes"),
+            ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.joke);
-                }),
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(120, 35),
+                  maximumSize: const Size(120, 35),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                child: const Text('Jokes')),
             Gap(20.h),
-            MaterialButton(
-                child: const Text("Products"),
+            ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.product);
-                }),
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(120, 35),
+                  maximumSize: const Size(120, 35),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                child: const Text('Product')),
           ],
         ),
       ),

@@ -11,6 +11,24 @@ class JokePage extends StatefulWidget {
 class _JokePageState extends State<JokePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          
+        },
+        child: const Icon(Icons.refresh),
+      ),
+      body: const SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text(
+              'Joke',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
