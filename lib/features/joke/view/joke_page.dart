@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../provider/joke_provider.dart';
 
 
-class JokePage extends StatefulWidget {
+class JokePage extends ConsumerWidget {
   const JokePage({super.key});
 
-  @override
-  State<JokePage> createState() => _JokePageState();
-}
 
-class _JokePageState extends State<JokePage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final joke = ref.watch(jokeDataProvider).joke;
+    final isLoading = ref.watch(jokeDataProvider).isLoading;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          
-        },
+        onPressed: ref.read(jokeDataProvider.notifier).getJoke,
         child: const Icon(Icons.refresh),
       ),
-      body: const SafeArea(
-        child: Center(
+      body: SafeArea(
+        child: isLoading ?
+        const Center(
+          child: CircularProgressIndicator(),
+        )
+            :
+        Center(
           child: Padding(
-            padding: EdgeInsets.all(18.0),
+            padding: const EdgeInsets.all(18.0),
             child: Text(
-              'Joke',
-              textAlign: TextAlign.center,
+              '${joke.joke}', textAlign: TextAlign.center,
             ),
           ),
         ),
