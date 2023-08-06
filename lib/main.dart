@@ -19,11 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) => MaterialApp(
-        routes: AppRoutes.routes,
-        initialRoute: Routes.home,
-        debugShowCheckedModeBanner: false,
-      )
+        designSize: const Size(360, 640),
+        builder: (context, child) => MaterialApp(
+          routes: AppRoutes.routes,
+          initialRoute: Routes.home,
+          debugShowCheckedModeBanner: false,
+        )
     );
   }
 }
