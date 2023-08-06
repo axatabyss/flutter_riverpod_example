@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/shared_provider/shared_providers.dart';
 import '../data/api/joke_api.dart';
-import '../data/models/joke_state.dart';
+import '../data/model/joke_state.dart';
 import '../data/repository/JokeRepository.dart';
 import 'joke_state_provider.dart';
 

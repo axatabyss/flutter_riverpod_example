@@ -16,6 +16,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text("GET API", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            Gap(10.h),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.joke);
@@ -28,7 +30,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 child: const Text('Jokes')),
-            Gap(20.h),
+            Gap(10.h),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.product);

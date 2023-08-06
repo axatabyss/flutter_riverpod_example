@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../../../core/network/dio_exceptions.dart';
 import '../api/joke_api.dart';
-import '../models/joke_model.dart';
+import '../model/joke_model.dart';
 
 class JokeRepository {
   final JokeApi _jokeApi;
