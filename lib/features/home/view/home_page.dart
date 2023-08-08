@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             Gap(10.h),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.joke);
+                  Navigator.of(context).pushNamed(Routes.liveMatches);
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(120, 35),
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                child: const Text('Jokes')),
+                child: const Text('Live Matches')),
           ],
         ),
       ),
