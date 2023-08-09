@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_example/features/matches/data/model/live_matches_state.dart';
 import 'package:flutter_riverpod_example/features/matches/provider/live_matches_provider.dart';
-import '../data/model/live_matches_model.dart';
 
 
-class LiveMatchesNotifier extends StateNotifier<LiveMatchesModel> {
-  LiveMatchesNotifier({required this.ref, required dynamic parameterData}) : super(const LiveMatchesModel()) {
+class LiveMatchesNotifier extends StateNotifier<LiveMatchesState> {
+  LiveMatchesNotifier({required this.ref, required dynamic parameterData}) : super(LiveMatchesState()) {
     fetchLiveMatches(ref: ref, parameterData: parameterData);
   }
 
@@ -17,7 +17,7 @@ class LiveMatchesNotifier extends StateNotifier<LiveMatchesModel> {
         .fetchLiveMatches(parameterData)
         .then((value) {
 
-          state = value;
+          state = state.copyWith(liveMatches: value);
           ref.read(isLoadingProvider.notifier).state = false;
 
     });

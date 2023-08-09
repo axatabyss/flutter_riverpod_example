@@ -36,7 +36,6 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
@@ -46,7 +45,7 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
                 controller: textController,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
-                  ref.read(textControllerProvider.notifier).state = value;
+                  ref.read(textControllerProvider.notifier).update((state) => value);
                 },
                 decoration: InputDecoration(
                     labelText: "Name",
@@ -69,141 +68,144 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
               child: CircularProgressIndicator(),
             )
                 :
-            ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: const BouncingScrollPhysics(),
-              itemCount: data.matches?.length,
-              itemBuilder: (ctx, index) => InkWell(
-                onTap: () {
+            data.liveMatches.status == false ?
+            const Center(child: Text("No Matches Found"))
+                    :
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemCount: data.liveMatches.matches?.length ?? 0,
+                itemBuilder: (ctx, index) => InkWell(
+                  onTap: () {
 
+                  },
+                  child: Container(
+                    width: 350,
+                    height: 100,
+                    margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                    decoration: const BoxDecoration(
+                      color: Color(0xff272E46),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: Stack(
+                      children: [
 
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
 
-                },
-                child: Container(
-                  width: 350,
-                  height: 100,
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                  decoration: const BoxDecoration(
-                    color: Color(0xff272E46),
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: Stack(
-                    children: [
-
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-
-                          Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(data.matches?[index].matchType ?? "T20",
-                                style: const TextStyle(fontFamily: 'RobotoRegular', fontSize: 12, color: Colors.white), textAlign: TextAlign.center),
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-
-                                    SizedBox(
-                                      width: 50,
-                                      height: 50,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(120.0),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: data.matches?[index].teamInfo?[0].img ?? "",
-                                        ),
-                                      ),
-                                    ),
-
-                                    const SizedBox(width: 5.0),
-
-                                    Text(data.matches?[index].teamInfo?[0].shortname ?? "T1",
-                                        style: const TextStyle(fontSize: 15, fontFamily: 'RobotoBold', color: Colors.white)),
-
-                                  ],
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Container(
-                                    width: 25,
-                                    height: 25,
-                                    alignment: Alignment.center,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.orange,
-                                        shape: BoxShape.circle
-                                    ),
-                                    child: const Text("vs", style: TextStyle(fontSize: 12, fontFamily: 'RobotoRegular', color: Colors.white))
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-
-                                    Text(data.matches?[index].teamInfo?[1].shortname ?? "T2",
-                                        style: const TextStyle(fontSize: 15, fontFamily: 'RobotoBold', color: Colors.white)),
-
-                                    const SizedBox(width: 5.0),
-
-                                    SizedBox(
-                                      width: 50,
-                                      height: 50,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(120.0),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: data.matches?[index].teamInfo?[1].img ?? "",
-                                        ),
-                                      ),
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-
-                            ],
-                          ),
-
-                          Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text("${data.matches?[index].date}",
-                                style: const TextStyle(fontFamily: 'RobotoRegular', fontSize: 12, color: Colors.white), textAlign: TextAlign.center),
-                          ),
-
-                        ],
-                      ),
-
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(6),
-                                bottomRight: Radius.circular(6)
+                            Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(data.liveMatches.matches?[index].matchType ?? "T20",
+                                  style: const TextStyle(fontFamily: 'RobotoRegular', fontSize: 12, color: Colors.white), textAlign: TextAlign.center),
                             ),
-                          ),
-                          child: Text(data.matches?[index].matchType == "Third Party" ? "International" : "Domestic", style: const TextStyle(fontSize: 10, fontFamily: 'RobotoRegular', color: Colors.white)),
-                        ),
-                      )
 
-                    ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+
+                                      SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(120.0),
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl: data.liveMatches.matches?[index].teamInfo?[0].img ?? "",
+                                          ),
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 5.0),
+
+                                      Text(data.liveMatches.matches?[index].teamInfo?[0].shortname ?? "T1",
+                                          style: const TextStyle(fontSize: 15, fontFamily: 'RobotoBold', color: Colors.white)),
+
+                                    ],
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.orange,
+                                          shape: BoxShape.circle
+                                      ),
+                                      child: const Text("vs", style: TextStyle(fontSize: 12, fontFamily: 'RobotoRegular', color: Colors.white))
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+
+                                      Text(data.liveMatches.matches?[index].teamInfo?[1].shortname ?? "T2",
+                                          style: const TextStyle(fontSize: 15, fontFamily: 'RobotoBold', color: Colors.white)),
+
+                                      const SizedBox(width: 5.0),
+
+                                      SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(120.0),
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl: data.liveMatches.matches?[index].teamInfo?[1].img ?? "",
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+
+                              ],
+                            ),
+
+                            Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text("${data.liveMatches.matches?[index].date}",
+                                  style: const TextStyle(fontFamily: 'RobotoRegular', fontSize: 12, color: Colors.white), textAlign: TextAlign.center),
+                            ),
+
+                          ],
+                        ),
+
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
+                            decoration: const BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(6),
+                                  bottomRight: Radius.circular(6)
+                              ),
+                            ),
+                            child: Text(data.liveMatches.matches?[index].matchType == "Third Party" ? "International" : "Domestic", style: const TextStyle(fontSize: 10, fontFamily: 'RobotoRegular', color: Colors.white)),
+                          ),
+                        )
+
+                      ],
+                    ),
                   ),
                 ),
               ),

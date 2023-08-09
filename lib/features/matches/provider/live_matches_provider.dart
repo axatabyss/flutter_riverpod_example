@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_example/features/matches/data/model/live_matches_model.dart';
+import 'package:flutter_riverpod_example/features/matches/data/model/live_matches_state.dart';
 
 import '../../../core/shared_provider/shared_providers.dart';
 import '../data/api/live_matches_api.dart';
@@ -17,11 +17,11 @@ final liveMatchesRepositoryProvider = Provider<LiveMatchesRepository>((ref) {
 });
 
 final liveMatchesProvider =
-StateNotifierProvider.family<LiveMatchesNotifier, LiveMatchesModel, dynamic>((ref, dataValue) {
+StateNotifierProvider.autoDispose.family<LiveMatchesNotifier, LiveMatchesState, dynamic>((ref, dataValue) {
   return LiveMatchesNotifier(ref: ref, parameterData: dataValue);
 });
 
-final isLoadingProvider = StateProvider<bool>((ref) {
+final isLoadingProvider = StateProvider.autoDispose<bool>((ref) {
   return true;
 });
 
