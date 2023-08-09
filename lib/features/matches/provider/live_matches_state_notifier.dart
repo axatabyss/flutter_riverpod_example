@@ -13,7 +13,6 @@ class LiveMatchesNotifier extends StateNotifier<LiveMatchesState> {
 
   Future fetchLiveMatches(dynamic parameterData) async {
 
-    state = state.copyWith(isLoading: true);
     await liveMatchesRepository.fetchLiveMatches(parameterData).then((data) {
       state = state.copyWith(liveMatches: data, isLoading: false);
     });

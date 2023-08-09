@@ -69,7 +69,7 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
                 :
             data.liveMatches.status == false ?
             const Center(child: Text("No Matches Found"))
-                    :
+                :
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -78,7 +78,6 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
                 itemCount: data.liveMatches.matches?.length ?? 0,
                 itemBuilder: (ctx, index) => InkWell(
                   onTap: () {
-
 
                     ref.read(liveMatchesProvider(paramsData).notifier).fetchLiveMatches(paramsData);
                     
