@@ -18,15 +18,7 @@ final liveMatchesRepositoryProvider = Provider<LiveMatchesRepository>((ref) {
 
 final liveMatchesProvider =
 StateNotifierProvider.autoDispose.family<LiveMatchesNotifier, LiveMatchesState, dynamic>((ref, dataValue) {
-  return LiveMatchesNotifier(ref: ref, parameterData: dataValue);
-});
-
-final isLoadingProvider = StateProvider.autoDispose<bool>((ref) {
-  return true;
-});
-
-final requestParameterProvider = StateProvider.autoDispose<dynamic>((ref) {
-  return null;
+  return LiveMatchesNotifier(ref.read(liveMatchesRepositoryProvider), dataValue);
 });
 
 

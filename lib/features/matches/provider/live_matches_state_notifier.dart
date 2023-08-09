@@ -1,26 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_example/features/matches/data/model/live_matches_state.dart';
-import 'package:flutter_riverpod_example/features/matches/provider/live_matches_provider.dart';
+import 'package:flutter_riverpod_example/features/matches/data/repository/live_matches_repository.dart';
 
 
 class LiveMatchesNotifier extends StateNotifier<LiveMatchesState> {
-  LiveMatchesNotifier({required this.ref, required dynamic parameterData}) : super(LiveMatchesState()) {
-    fetchLiveMatches(ref: ref, parameterData: parameterData);
+  LiveMatchesNotifier(this.liveMatchesRepository, dynamic parameterData) : super(LiveMatchesState()) {
+    fetchLiveMatches(parameterData);
   }
 
-  final Ref ref;
 
-  Future fetchLiveMatches({required Ref ref, required dynamic parameterData}) async {
+  LiveMatchesRepository liveMatchesRepository;
 
-    await ref
-        .read(liveMatchesRepositoryProvider)
-        .fetchLiveMatches(parameterData)
-        .then((value) {
+  Future fetchLiveMatches(dynamic parameterData) async {
 
-          state = state.copyWith(liveMatches: value);
-          ref.read(isLoadingProvider.notifier).state = false;
-
+    state = state.copyWith(isLoading: true);
+    await liveMatchesRepository.fetchLiveMatches(parameterData).then((data) {
+      state = state.copyWith(liveMatches: data, isLoading: false);
     });
+
   }
 
 

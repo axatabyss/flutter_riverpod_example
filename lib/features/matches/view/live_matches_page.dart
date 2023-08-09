@@ -31,7 +31,6 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
 
     final controllerText = ref.watch(textControllerProvider);
     final data = ref.watch(liveMatchesProvider(paramsData));
-    final isLoading = ref.watch(isLoadingProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -63,7 +62,7 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
               ),
             ),
 
-            isLoading ?
+            data.isLoading ?
             const Center(
               child: CircularProgressIndicator(),
             )
@@ -80,6 +79,9 @@ class _LiveMatchesPageState extends ConsumerState<LiveMatchesPage> {
                 itemBuilder: (ctx, index) => InkWell(
                   onTap: () {
 
+
+                    ref.read(liveMatchesProvider(paramsData).notifier).fetchLiveMatches(paramsData);
+                    
                   },
                   child: Container(
                     width: 350,
